@@ -8,57 +8,29 @@ import allure
 class Http_method:
     headers = {'Content-Type': 'application/json'}
     cookie = ""
-    URL = 'https://reqres.in/api/'
     payload = {}
 
-    # @staticmethod  # позволяет нам не прописывать внутри функции self параметр, и не привязываться к классу
-    # def get(url):
-    #     with allure.step("GET"):
-    #         Logger.add_request(url, method='GET')
-    #         result = requests.get(url, headers=Http_method.headers, cookies=Http_method.cookie)
-    #         Logger.add_response(result)
-    #         return result
-    #
-    # @staticmethod
-    # def post(url, body):
-    #     with allure.step("POST"):
-    #         Logger.add_request(url, method='POST')
-    #         result = requests.post(url, json=body, headers=Http_method.headers, cookies=Http_method.cookie)
-    #         Logger.add_response(result)
-    #         return result
-    #
-    # @staticmethod
-    # def put(url, body):
-    #     with allure.step("PUT"):
-    #         Logger.add_request(url, method='PUT')
-    #         result = requests.put(url, json=body, headers=Http_method.headers, cookies=Http_method.cookie)
-    #         Logger.add_response(result)
-    #         return result
-    #
-    # @staticmethod
-    # def delete(url, body):
-    #     with allure.step("DELETE"):
-    #         Logger.add_request(url, method='DELETE')
-    #         result = requests.delete(url, json=body, headers=Http_method.headers, cookies=Http_method.cookie)
-    #         Logger.add_response(result)
-    #         return result
-
     @staticmethod  # позволяет нам не прописывать внутри функции self параметр, и не привязываться к классу
-    def get(endpoint):
-        response = requests.get(url=Http_method.URL+endpoint,  params=Http_method.payload, headers=Http_method.headers, cookies=Http_method.cookie)
+    def get(url: str):
+        response = requests.get(url=url,  params=Http_method.payload, headers=Http_method.headers, cookies=Http_method.cookie)
         return response
 
     @staticmethod
-    def post(url, body):
-        response = requests.post(url, json=body, headers=Http_method.headers, cookies=Http_method.cookie)
+    def post(url: str, body: dict):
+        response = requests.post(url=url, json=body, headers=Http_method.headers, cookies=Http_method.cookie)
         return response
 
     @staticmethod
-    def put(url, body):
+    def put(url: str, body: dict):
         response = requests.put(url, json=body, headers=Http_method.headers, cookies=Http_method.cookie)
         return response
 
     @staticmethod
-    def delete(url, body):
-        response = requests.delete(url, json=body, headers=Http_method.headers, cookies=Http_method.cookie)
+    def put_without_body(url: str):
+        response = requests.put(url=url, headers=Http_method.headers, cookies=Http_method.cookie)
+        return response
+
+    @staticmethod
+    def delete(url: str):
+        response = requests.delete(url=url, headers=Http_method.headers, cookies=Http_method.cookie)
         return response
