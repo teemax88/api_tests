@@ -1,13 +1,12 @@
 import requests
-from utils.logger import Logger
 import allure
 
 """Список HTTP методов"""
-
+URL = 'https://dev-rest.qform.io/ru/v3'
 
 class Http_method:
     headers = {'Content-Type': 'application/json'}
-    cookie = ""
+    # cookie = ""
     payload = {}
 
     @staticmethod  # позволяет нам не прописывать внутри функции self параметр, и не привязываться к классу
@@ -17,7 +16,7 @@ class Http_method:
 
     @staticmethod
     def post(url: str, body: dict):
-        response = requests.post(url=url, json=body, headers=Http_method.headers, cookies=Http_method.cookie)
+        response = requests.post(url=url, json=body, headers=Http_method.headers)
         return response
 
     @staticmethod

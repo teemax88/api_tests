@@ -1,35 +1,31 @@
 from utils.checking import Checking
 from utils.http_methods import Http_method
+from utils.http_methods import URL
 from faker import Faker
 import pytest
 
-URL = 'https://reqres.in/api/users'
-# id = ''
-# token = ''
+
 data = {
     "username": Faker().user_name(),
     "email": Faker().password(),
-    "password": Faker().email()
+    "password": f"{Faker().user_name()}@reqres.in"
 }
 
 
 class Test_users():
 
     def test_register_user(self):
-        # global id, token
+        global data
         print("Метод POST для создания пользователя")
-        response = Http_method.post(URL, data)  # Регистрация нового пользователя
-
-        # id = response.json()['id']  # взяли id и сохранили в переменную
-        # token = response.json()['token']  # взяли token и сохранили в переменную
+        response = Http_method.post(f"{URL}/register", data)  # Регистрация нового пользователя
 
         print(response.json())
 
-        Checking.checking_status_code(response, 201)  # проверяем, что стаутс ответа == 200
+        Checking.checking_status_code(response, 200)  # проверяем, что стаутс ответа == 200
 
 
-    def test_get_resource(self):
-        print(data)
+    # def test_get_resource(self):
+    #     print(data)
         # print("Метод GET для несуществующего русурса")
         # result = Http_method.get(f"{URL}/{total_count + 1}")  # получаем ответ для несуществующего ресурса
         #
