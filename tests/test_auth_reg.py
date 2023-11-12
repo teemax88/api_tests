@@ -1,46 +1,39 @@
 import random
+import time
 
 import pytest
 
 from utils.checking import Checking
-from utils.http_methods import Http_method, URL
+from utils.http_methods import Http_method
+
+URL = 'https://dev-rest.qform.io/ru/v3'
+
+# email_name = "redtest"
+email_url = "https://www.mailforspam.com/mail"
 
 
 class Test_auth_reg():
-    # def test_register_user(self, register_data):
-    #     response = Http_method.post(f"{URL}/user/register", register_data)  # Метод POST для регистрации пользователя
-    #     print(response.json())
-    #     Checking.checking_status_code(response, 200)  # проверяем, что стаутс ответа == 200
-
-    def test_auth_via_login(self, auth_data):
-        data = {"username": auth_data["username"],
-                "password": auth_data["password"]
-                }
-
-        response = Http_method.post(f"{URL}/auth", data)  # Метод POST для регистрации пользователя
-        print(f"Это ответ ----- {response.json()}")
+    def test_register_user(self, register_data):
+        print(register_data)
+        response = Http_method.post(f"{URL}/user/register", register_data)  # Метод POST для регистрации пользователя
+        # print(response.text)
         Checking.checking_status_code(response, 200)  # проверяем, что стаутс ответа == 200
 
-    # def test_get_resource(self):
-    #     print("Метод GET для несуществующего русурса")
-    #     result = Http_method.get(f"{URL}/resource/{total_count + 1}")  # получаем ответ для несуществующего ресурса
-    #
-    #     Checking.checking_status_code(result, 404)  # проверяем, что стаутс ответа == 404
-    #
-    # def test_get_unknown_resource(self):
-    #     print(f"Метод GET для ресурса с ID = {count}")
-    #     result_one_resource = Http_method.get(f"{URL}/resource/{count}")  # Получаем информцию об одном ресурсе
-    #
-    #     Checking.checking_status_code(result_one_resource, 200)
-    #
-    # def test_put_resource(self):
-    #     print(f"Метод PUT изменение для ресурса с ID = {count}")
-    #     result_update = Http_method.put_without_body(f"{URL}/resource/{count}")
-    #
-    #     Checking.checking_status_code(result_update, 200)
-    #
-    # def test_delete_resource(self):
-    #     print(f"Метод DELETE удаление для ресурса с ID = {count}")
-    #     result_delete = Http_method.delete(f"{URL}/resource/{count}")
-    #
-    #     Checking.checking_status_code(result_delete, 204)
+        email_page = Http_method.get(f'{email_url}/{register_data["username"]}')
+        html_email_page = email_page.text.split()
+        if 'QForm' in html_email_page:
+            inbox_page = Http_method.get(f'{email_url}/{register_data["username"]}/1')
+            html_inbox_page = inbox_page.text.split()
+            for word in html_inbox_page:
+                if word.startswith('https://'):
+                    get_link = word.split('<')[0]
+
+        confirm_email = Http_method.get(get_link)
+        print(confirm_email.text)
+        Checking.checking_status_code(confirm_email, 200)  # проверяем, что стаутс ответа == 200
+        time.sleep(10)
+
+    def test_auth_via_login(self, auth_data_via_login):
+        response = Http_method.post(f"{URL}/auth", auth_data_via_login)  # Метод POST для регистрации пользователя
+        print(response.text)
+        # Checking.checking_status_code(response, 200)  # проверяем, что стаутс ответа == 200

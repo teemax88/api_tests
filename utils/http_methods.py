@@ -1,35 +1,20 @@
 import requests
-import allure
 
-"""Список HTTP методов"""
-URL = 'https://dev-rest.qform.io/ru/v3'
 
 class Http_method:
-    headers = {'Content-Type': 'application/json'}
-    # cookie = ""
-    payload = {}
-
     @staticmethod  # позволяет нам не прописывать внутри функции self параметр, и не привязываться к классу
-    def get(url: str):
-        response = requests.get(url=url,  params=Http_method.payload, headers=Http_method.headers, cookies=Http_method.cookie)
-        return response
+    def get(url, **kwargs):
+        return requests.request("GET", url, **kwargs)
+        # return response
 
     @staticmethod
-    def post(url: str, body: dict):
-        response = requests.post(url=url, json=body, headers=Http_method.headers)
-        return response
+    def post(url: str, payload: dict):
+        return requests.request("POST", url, data=payload)
 
     @staticmethod
-    def put(url: str, body: dict):
-        response = requests.put(url, json=body, headers=Http_method.headers, cookies=Http_method.cookie)
-        return response
+    def put(url, **kwargs):
+        return requests.request("PUT", url, **kwargs)
 
     @staticmethod
-    def put_without_body(url: str):
-        response = requests.put(url=url, headers=Http_method.headers, cookies=Http_method.cookie)
-        return response
-
-    @staticmethod
-    def delete(url: str):
-        response = requests.delete(url=url, headers=Http_method.headers, cookies=Http_method.cookie)
-        return response
+    def delete(url, **kwargs):
+        return requests.request("DELETE", url=url, **kwargs)

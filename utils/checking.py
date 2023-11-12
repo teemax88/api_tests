@@ -5,9 +5,6 @@ from requests import Response
 from faker import Faker
 
 
-print()
-print()
-print()
 
 class Checking():
     """Метод для проверки статус кода"""
