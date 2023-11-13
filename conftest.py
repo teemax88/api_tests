@@ -3,9 +3,13 @@ import json
 import pytest
 from faker import Faker
 
-username = Faker().user_name()
+# username = Faker().user_name()
+# email = f'{username}@mailforspam.com'
+# password = Faker().password()
+
+username = "zxzxzxz"
 email = f'{username}@mailforspam.com'
-password = Faker().password()
+password = "zxzxzxz"
 
 @pytest.fixture
 def register_data():
