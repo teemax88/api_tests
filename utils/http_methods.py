@@ -10,8 +10,8 @@ class Http_method:
         # return response
 
     @staticmethod
-    def post(url: str, data=None, **kwargs):
-        return requests.request("POST", url=url, data=data, **kwargs)
+    def post(url: str, headers, data=None, **kwargs):
+        return requests.request("POST", url=url, headers=headers, data=data, **kwargs)
 
     @staticmethod
     def put(url: str, **kwargs):

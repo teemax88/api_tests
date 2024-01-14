@@ -5,3 +5,8 @@ MAIL_URL = "https://www.mailforspam.com/mail"
 
 
 
+
+MAIN_URL = 'https://petstore.swagger.io/v2'
+
+
+
