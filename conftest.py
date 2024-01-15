@@ -70,3 +70,37 @@ def user_data():
         "userStatus": 1
     })
     return payload
+
+
+@pytest.fixture
+def user_array():
+    payload = json.dumps([
+        {
+            "id": 2222,
+            "username": "jim2",
+            "firstName": "carrey2",
+            "lastName": "test2",
+            "email": "jimm2@mail.ru",
+            "password": "jim2222",
+            "phone": "22222222",
+            "userStatus": 0
+        }
+    ])
+    return payload
+
+
+@pytest.fixture
+def user_list():
+    payload = json.dumps([
+        {
+            "id": 3333333,
+            "username": "jim3",
+            "firstName": "carrey3",
+            "lastName": "test3",
+            "email": "jimm3@mail.ru",
+            "password": "jim33333",
+            "phone": "3333333333333",
+            "userStatus": 1
+        }
+    ])
+    return payload
