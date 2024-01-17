@@ -14,6 +14,7 @@ headers = {
 def test_create_user(user_data):
     response = Http_method.post(url=MAIN_URL + '/user', headers=headers, data=user_data)
     print(response.text)
+    print(f'response === {response.content}')
     Checking.checking_status_code(response, 200)  # проверяем, что стаутс ответа == 200
 
 
@@ -31,7 +32,6 @@ def test_create_with_list(user_list):
     Checking.checking_status_code(response, 200)  # проверяем, что стаутс ответа == 200
 
 
-@pytest.mark.skip
 def test_get_user(user_data):
     data = json.loads(user_data)
 
@@ -50,6 +50,62 @@ def test_login_user(user_data):
     response = Http_method.get(url=MAIN_URL + '/user/login', params=payload, headers=headers)
     Checking.checking_status_code(response, 200)  # проверяем, что стаутс ответа == 200
 
+
+@pytest.mark.skip
+def test_update_user(user_data, new_user_data):
+    data = json.loads(user_data)
+
+    response = Http_method.put(url=MAIN_URL + '/user/' + data["username"], data=new_user_data, headers=headers)
+    print(f'response === {response.content}')
+    Checking.checking_status_code(response, 200)  # проверяем, что стаутс ответа == 200
+
+
+@pytest.mark.skip
+def test_get2_user(user_data, new_user_data):
+    data = json.loads(user_data)
+    new_data = json.loads(new_user_data)
+
+    response = Http_method.get(url=MAIN_URL + '/user/' + data["username"], headers=headers)
+    print(f'response data === {response.content}')
+    # Checking.checking_status_code(response, 404)  # проверяем, что стаутс ответа == 404
+
+    response = Http_method.get(url=MAIN_URL + '/user/' + new_data["username"], headers=headers)
+    print(f'response new data === {response.content}')
+    # Checking.checking_status_code(response, 200)  # проверяем, что стаутс ответа == 200
+
+
+@pytest.mark.skip
+def test_logout_user():
+    response = Http_method.get(url=MAIN_URL + '/user/logout', headers=headers)
+    Checking.checking_status_code(response, 200)  # проверяем, что стаутс ответа == 200
+    print(f'response === {response.content}')
+
+
+@pytest.mark.skip
+def test_delete_user(user_data, new_user_data):
+    try:
+        data = json.loads(user_data)
+        new_data = json.loads(new_user_data)
+    except json.JSONDecodeError:
+        raise ValueError("Ошибка в формате user_data")
+
+    response = Http_method.delete(url=MAIN_URL + '/user/' + data["username"], headers=headers)
+    Checking.checking_status_code(response, 404)  # проверяем, что стаутс ответа == 404
+
+    response = Http_method.delete(url=MAIN_URL + '/user/' + new_data["username"], headers=headers)
+    Checking.checking_status_code(response, 200)  # проверяем, что стаутс ответа == 200
+
+
+
+    # def to_json(self) -> str:
+    #     """Returns the JSON representation of the model using alias"""
+    #     # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
+    #     return json.dumps(self.to_dict())
+    #
+    # @classmethod
+    # def from_json(cls, json_str: str) -> Self:
+    #     """Create an instance of AttachmentGet from a JSON string"""
+    #     return cls.from_dict(json.loads(json_str))
 
 # import requests
 # import json
@@ -80,32 +136,3 @@ def test_login_user(user_data):
 #
 #
 # test_login_user(user_data)
-
-
-def test_update_user(user_data, new_user_data):
-    data = json.loads(user_data)
-
-    response = Http_method.put(url=MAIN_URL + '/user/' + data["username"], data=new_user_data, headers=headers)
-    print(f'response === {response.content}')
-    Checking.checking_status_code(response, 200)  # проверяем, что стаутс ответа == 200
-
-
-@pytest.mark.skip
-def test_logot_user():
-    response = Http_method.get(url=MAIN_URL + '/user/logout', headers=headers)
-    Checking.checking_status_code(response, 200)  # проверяем, что стаутс ответа == 200
-    print(f'response === {response.content}')
-
-
-def test_delete_user(user_data, new_user_data):
-    try:
-        data = json.loads(user_data)
-        new_data = json.loads(new_user_data)
-    except json.JSONDecodeError:
-        raise ValueError("Ошибка в формате user_data")
-
-    response = Http_method.delete(url=MAIN_URL + '/user/' + data["username"], headers=headers)
-    Checking.checking_status_code(response, 404)  # проверяем, что стаутс ответа == 404
-
-    response = Http_method.delete(url=MAIN_URL + '/user/' + new_data["username"], headers=headers)
-    Checking.checking_status_code(response, 200)  # проверяем, что стаутс ответа == 200

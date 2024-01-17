@@ -60,7 +60,7 @@ from faker import Faker
 @pytest.fixture
 def user_data():
     payload = json.dumps({
-        "id": 123,
+        "id": 789,
         "username": 'jim',
         "firstName": "carrey",
         "lastName": "test",
@@ -71,10 +71,11 @@ def user_data():
     })
     return payload
 
+
 @pytest.fixture
 def new_user_data():
     payload = json.dumps({
-        "id": 666,
+        "id": 789,
         "username": 'tim',
         "firstName": "tam",
         "lastName": "tom",
