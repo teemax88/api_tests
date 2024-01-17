@@ -60,13 +60,27 @@ from faker import Faker
 @pytest.fixture
 def user_data():
     payload = json.dumps({
-        "id": 111111111111,
-        "username": "jim",
+        "id": 123,
+        "username": 'jim',
         "firstName": "carrey",
         "lastName": "test",
         "email": "jimm@mail.ru",
         "password": "jim123456",
         "phone": "123456789",
+        "userStatus": 1
+    })
+    return payload
+
+@pytest.fixture
+def new_user_data():
+    payload = json.dumps({
+        "id": 666,
+        "username": 'tim',
+        "firstName": "tam",
+        "lastName": "tom",
+        "email": "mango@mail.ru",
+        "password": "tretretre",
+        "phone": "987654312",
         "userStatus": 1
     })
     return payload
