@@ -1,10 +1,25 @@
 import pytest
+from utils.tools import Calculator
 
 
 # import requests
 
-def test_example():
-    assert isinstance('hello', str)
+@pytest.fixture(scope="module")
+def fix():
+    return Calculator
+
+
+def test_add(fix):
+    assert fix.add(2, 3) == 5
+
+
+def test_sub(fix):
+    assert fix.sub(5, 5) == 0
+
+
+@pytest.mark.xfail
+def test_div(fix):
+    assert fix.div(5, 0) == ZeroDivisionError
 
 
 """****************************//////////////////////////////************************"""
@@ -106,7 +121,7 @@ def test_example():
 
 # def to_json(self) -> str:
 #     """Returns the JSON representation of the model using alias"""
-#     # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
+#     # pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
 #     return json.dumps(self.to_dict())
 #
 # @classmethod
