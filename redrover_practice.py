@@ -33,7 +33,6 @@
 
 """****************************//////////////////////////////************************"""
 
-
 # def func(a, b, *args):
 #     print(args)  # (1, 2, 3)
 #     lst = list(args)
@@ -67,3 +66,18 @@
 # result()
 
 """****************************//////////////////////////////************************"""
+
+
+def sum_mul(n, m):
+    s = 0
+    if n <= 0 or m <= 0:
+        return "INVALID"
+    elif n <= 0 or m <= 0:
+        return "INVALID"
+    else:
+        for i in range(n, m, n):
+            s += i
+    return s
+
+
+print(sum_mul(2, 0))
